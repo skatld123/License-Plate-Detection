@@ -1,0 +1,13 @@
+python tools/analysis_tools/coco_error_analysis.py work_dirs/clp_detection/test.bbox.json results_error_analysis --ann=data/dataset_2044_new/test/test.json
+
+# dino
+bash ./tools/dist_test.sh configs/clp/dino-5scale_swin-l_8xb2-36e_coco.py  work_dirs/dino_2044_new_50/best_coco_bbox_mAP_epoch_38.pth 2 --out result_pkl/dino_2044_new_50.pkl 
+python tools/analysis_tools/coco_error_analysis.py work_dirs/clp_detection/dino_2044_new_50/.bbox.json results_error_analysis/dino_2044_new_50 --ann=/root/dataset_clp/dataset_2044_new/test/test.json
+
+# swin
+bash ./tools/dist_test.sh configs/clp/swin_clp_withAug.py  work_dirs/swin_2044_new_50_withAug/best_coco_bbox_mAP_epoch_39.pth 2
+python tools/analysis_tools/coco_error_analysis.py work_dirs/clp_detection/swin_2044_new_50/.bbox.json results_error_analysis/swin_2044_new_50_withAug --ann=/root/dataset_clp/dataset_2044_new/test/test.json
+
+#effi
+bash ./tools/dist_test.sh configs/clp/effb3_fpn_8xb4-crop896-1x_clp_withAug.py  work_dirs/effb3_2044_new_50_withAug/best_coco_bbox_mAP_epoch_28.pth 2
+python tools/analysis_tools/coco_error_analysis.py work_dirs/clp_detection/effi_2044_new_50_withAug/.bbox.json results_error_analysis/effi_2044_new_50_withAug --ann=/root/dataset_clp/dataset_2044_new/test/test.json
