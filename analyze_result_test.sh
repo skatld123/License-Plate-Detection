@@ -13,3 +13,9 @@ python tools/test.py \
 configs/clp/dcnv2_clp.py \
 work_dirs/dcnv2_2044_200/epoch_100.pth \
 --show-dir /root/mmdetection/results/dcnv2/
+
+python tools/test.py \
+--out result/dcnv2_2044_100.pkl \
+configs/clp/dcnv2_clp.py \
+work_dirs/dcnv2_2044_200/epoch_100.pth \
+--show-dir /root/mmdetection/results/dcnv2/

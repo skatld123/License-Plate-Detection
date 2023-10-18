@@ -138,18 +138,18 @@ class DetLocalVisualizer(Visualizer):
                 alpha=self.alpha,
                 line_widths=self.line_width)
             # bbox 이미지 크롭 
-            for idx, bbox in enumerate(bboxes) :
+            # for idx, bbox in enumerate(bboxes) :
 
-                x1 = int(bbox[0].item())
-                y1 = int(bbox[1].item())
-                x2 = int(bbox[2].item())
-                y2 = int(bbox[3].item())
-                crop_img = image[y1:y2, x1:x2]
-                obj_img = cv2.cvtColor(crop_img, cv2.COLOR_RGB2BGR)
-                # 이미지 저장
-                img_name = os.path.basename(self.out_file)
-                print(img_name)
-                cv2.imwrite('/root/mmdetection/work_dirs/result/dcn_detection/object/{}{}.jpg'.format(img_name, idx), obj_img)
+            #     x1 = int(bbox[0].item())
+            #     y1 = int(bbox[1].item())
+            #     x2 = int(bbox[2].item())
+            #     y2 = int(bbox[3].item())
+            #     crop_img = image[y1:y2, x1:x2]
+            #     obj_img = cv2.cvtColor(crop_img, cv2.COLOR_RGB2BGR)
+            #     # 이미지 저장
+            #     img_name = os.path.basename(self.out_file)
+            #     print(img_name)
+            #     cv2.imwrite('/root/mmdetection/work_dirs/result/dcn_detection/object/{}{}.jpg'.format(img_name, idx), obj_img)
             positions = bboxes[:, :2] + self.line_width
 
             areas = (bboxes[:, 3] - bboxes[:, 1]) * (

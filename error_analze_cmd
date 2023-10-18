@@ -3,6 +3,7 @@ python tools/analysis_tools/coco_error_analysis.py work_dirs/clp_detection/test.
 # dino
 bash ./tools/dist_test.sh configs/clp/dino-5scale_swin-l_8xb2-36e_coco.py  work_dirs/dino_2044_new_50/best_coco_bbox_mAP_epoch_38.pth 2 --out result_pkl/dino_2044_new_50.pkl 
 python tools/analysis_tools/coco_error_analysis.py work_dirs/clp_detection/dino_2044_new_50/.bbox.json results_error_analysis/dino_2044_new_50 --ann=/root/dataset_clp/dataset_2044_new/test/test.json
+python tools/analysis_tools/analyze_results.py configs/clp/dino-5scale_swin-l_8xb2-36e_coco.py result_pkl/dino_2044_new_50.pkl results/dino --topk 100
 
 # swin
 bash ./tools/dist_test.sh configs/clp/swin_clp_withAug.py  work_dirs/swin_2044_new_50_withAug/best_coco_bbox_mAP_epoch_39.pth 2

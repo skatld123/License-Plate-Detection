@@ -1,6 +1,13 @@
 _base_ = [
-    '../_base_/datasets/coco_detection.py', '../_base_/default_runtime.py'
+    '../_base_/datasets/clp_detection.py', '../_base_/default_runtime.py'
 ]
+dataset_type = 'CLP'
+data_root = '/root/dataset_clp/dataset_v2/'
+
+# learning policy
+max_epochs = 100
+work_dir = '/root/mmdetection/work_dirs/deformable_detr_' + str(max_epochs)
+
 model = dict(
     type='DeformableDETR',
     num_queries=300,
@@ -57,7 +64,7 @@ model = dict(
     positional_encoding=dict(num_feats=128, normalize=True, offset=-0.5),
     bbox_head=dict(
         type='DeformableDETRHead',
-        num_classes=80,
+        num_classes=2,
         sync_cls_avg_factor=True,
         loss_cls=dict(
             type='FocalLoss',
@@ -133,8 +140,6 @@ optim_wrapper = dict(
             'reference_points': dict(lr_mult=0.1)
         }))
 
-# learning policy
-max_epochs = 50
 train_cfg = dict(
     type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=1)
 val_cfg = dict(type='ValLoop')
@@ -154,3 +159,19 @@ param_scheduler = [
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (16 GPUs) x (2 samples per GPU)
 auto_scale_lr = dict(base_batch_size=32)
+
+default_hooks = dict(
+    early_stopping=dict(
+        type="EarlyStoppingHook",
+        monitor="coco/bbox_mAP",
+        patience=15,
+        min_delta=0.005),
+    checkpoint=dict(
+        type="CheckpointHook",
+        interval=5,
+        save_best='auto',
+        out_dir=work_dir)
+)
+
+test_evaluator = dict(
+    outfile_prefix='./work_dirs/clp_detection/deformable_detr/')

@@ -1,8 +1,9 @@
+# bash ./tools/dist_train.sh     /root/mmdetection/configs/clp/dcnv2_clp.py     2
 _base_ = '../dino/dino-5scale_swin-l_8xb2-12e_coco.py'
 max_epochs = 50
 dataset_type = 'CLP'
-data_root = '/root/dataset_clp/dataset_2044_new/'
-work_dir = '/root/mmdetection/work_dirs/dino_2044_new_' + str(max_epochs)
+data_root = '/root/dataset_clp/dataset_crop/'
+work_dir = '/root/mmdetection/work_dirs/dino_crop_' + str(max_epochs)
 train_cfg = dict(
     type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=1)
 param_scheduler = [
@@ -28,7 +29,7 @@ default_hooks = dict(
     early_stopping=dict(
         type="EarlyStoppingHook",
         monitor="coco/bbox_mAP",
-        patience=10,
+        patience=15,
         min_delta=0.005),
     checkpoint=dict(
         type="CheckpointHook",
@@ -38,4 +39,4 @@ default_hooks = dict(
 )
 
 test_evaluator = dict(
-    outfile_prefix='./work_dirs/clp_detection/dino_2044_new_50/')
+    outfile_prefix='./work_dirs/clp_detection/dino_crop_/')

@@ -1,8 +1,28 @@
 _base_ = [
     '../_base_/models/cascade-mask-rcnn_r50_fpn.py',
-    '../_base_/datasets/coco_instance.py',
+    # '../_base_/datasets/coco_instance.py',
+    '../_base_/datasets/clp_detection.py',
     '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py'
 ]
+
+name = 'convnext_'
+max_epochs = 50
+work_dir = '/root/mmdetection/work_dirs/convnext_' + str(max_epochs)
+default_hooks = dict(
+    early_stopping=dict(
+        type="EarlyStoppingHook",
+        monitor="coco/bbox_mAP",
+        patience=15,
+        min_delta=0.005),
+    checkpoint=dict(
+        type="CheckpointHook",
+        interval=5,
+        save_best='auto',
+        out_dir=work_dir)
+)
+
+test_evaluator = dict(
+    outfile_prefix='./work_dirs/clp_detection/convnext_/')
 
 # TODO: delete custom_imports after mmcls supports auto import
 # please install mmcls>=1.0
@@ -32,7 +52,7 @@ model = dict(
             conv_out_channels=256,
             fc_out_channels=1024,
             roi_feat_size=7,
-            num_classes=80,
+            num_classes=2,
             bbox_coder=dict(
                 type='DeltaXYWHBBoxCoder',
                 target_means=[0., 0., 0., 0.],
@@ -51,7 +71,7 @@ model = dict(
             conv_out_channels=256,
             fc_out_channels=1024,
             roi_feat_size=7,
-            num_classes=80,
+            num_classes=2,
             bbox_coder=dict(
                 type='DeltaXYWHBBoxCoder',
                 target_means=[0., 0., 0., 0.],
@@ -70,7 +90,7 @@ model = dict(
             conv_out_channels=256,
             fc_out_channels=1024,
             roi_feat_size=7,
-            num_classes=80,
+            num_classes=2,
             bbox_coder=dict(
                 type='DeltaXYWHBBoxCoder',
                 target_means=[0., 0., 0., 0.],
@@ -86,7 +106,7 @@ model = dict(
 # augmentation strategy originates from DETR / Sparse RCNN
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args={{_base_.backend_args}}),
-    dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+    dict(type='LoadAnnotations', with_bbox=True, with_mask=False),
     dict(type='RandomFlip', prob=0.5),
     dict(
         type='RandomChoice',
@@ -120,7 +140,6 @@ train_pipeline = [
 ]
 train_dataloader = dict(dataset=dict(pipeline=train_pipeline))
 
-max_epochs = 36
 train_cfg = dict(max_epochs=max_epochs)
 
 # learning rate

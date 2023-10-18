@@ -17,8 +17,10 @@ class CLP(BaseDetDataset):
     METAINFO = {
         'classes':
         ('license-plate', 'vehicle'),
+        # ('license-plate'),
         # palette is a list of color tuples, which is used for visualization.
         'palette':
+        # [(220, 20, 60)]
         [(220, 20, 60), (255, 0, 0)]
     }
     COCOAPI = COCO

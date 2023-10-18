@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CLP'
-data_root = '/root/dataset_clp/dataset_2044_new/'
+data_root = '/root/dataset_clp/dataset_v2/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
