@@ -31,12 +31,13 @@ model = dict(
     decoder=dict(layer_cfg=dict(cross_attn_cfg=dict(num_levels=num_levels))),
     test_cfg=dict(
     rpn=dict(
-        nms_pre=1000,
+        nms_pre=2000, # 1000 -> 2000
         max_per_img=1000,
         nms=dict(type='nms', iou_threshold=0.7),
         min_bbox_size=0),
     rcnn=dict(
         score_thr=0.05,
         nms=dict(type='nms', iou_threshold=0.5),
-        max_per_img=100))
+        max_per_img=300, # 100 -> 300
+    )) # 추가
     )

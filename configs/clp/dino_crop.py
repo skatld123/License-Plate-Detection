@@ -2,8 +2,8 @@
 _base_ = '../dino/dino-5scale_swin-l_8xb2-12e_coco.py'
 max_epochs = 150
 dataset_type = 'CLP'
-data_root = '/root/dataset_clp/dataset_super/'
-work_dir = '/root/mmdetection/work_dirs/dino_super_1280_' + str(max_epochs)
+data_root = '/root/dataset_clp/dataset_crop/'
+work_dir = '/root/mmdetection/work_dirs/dino_crop_aug_' + str(max_epochs)
 train_cfg = dict(
     type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=1)
 param_scheduler = [
@@ -51,15 +51,12 @@ train_pipeline = [
                     type='RandomCrop',
                     crop_type='absolute_range',
                     # crop_size=(384, 600),
-                    crop_size=(600, 500),
+                    crop_size=(600, 600),
                     allow_negative_crop=True),
             ],
             [
                 dict(
                     type='RandomChoiceResize',
-                    # scales=[(480, 1333), (512, 1333), (544, 1333), (576, 1333),
-                    #         (608, 1333), (640, 1333), (672, 1333), (704, 1333),
-                    #         (736, 1333), (768, 1333), (800, 1333)],
                     scales=[(1333, 608), (1333, 640), (1333, 672), (1333, 704),
                             (1333, 736), (1333, 768), (1333, 800),
                             (608, 1333), (640, 1333), (672, 1333), (704, 1333),
@@ -122,4 +119,4 @@ default_hooks = dict(
 )
 
 test_evaluator = dict(
-    outfile_prefix='./work_dirs/clp_detection/dino_super_1280_/')
+    outfile_prefix='./work_dirs/clp_detection/dino_crop_aug/')
